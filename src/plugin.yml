@@ -1,0 +1,7 @@
+name: Disco
+version: 0.1
+main: me.rigi.disco.discoMain
+commands:
+  disco:
+    description: Used to make a disco!
+    usage: /disco
