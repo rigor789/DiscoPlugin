@@ -17,12 +17,13 @@ import me.rigi.disco.discoBlockListener;
 
 public class discoMain extends JavaPlugin {
 	private discoBlockListener bListener = new discoBlockListener(this);
-	Logger Log = Logger.getLogger("Minecraft");
+	static Logger Log = Logger.getLogger("Minecraft");
 	public static ArrayList<Player> players = new ArrayList<Player>();
 	public static ArrayList<Player> using = new ArrayList<Player>();
 	//public static Map<String, Block> blocks = new HashMap<String, Block>();
 	public static ArrayList<Block> blocks = new ArrayList<Block>();
 	private static byte[] allowed = {1,2,3,4,5,6,9,10,11,14};
+	private static Random random;
 
 
 	//@Override
@@ -39,14 +40,24 @@ public class discoMain extends JavaPlugin {
 		discopreferences.createDir();
 		coordinateReader reader = new coordinateReader(this);
 		reader.readAll();
+		random = new Random();
 		Log.info("Disco plugin enabled!");
 	}
 	public static void blockChanger() {
+        //Block block = blocks.get(random.nextInt(blocks.size()));
+		//block.setData(randomColor);
+		//byte randomColor = allowed[random.nextInt(allowed.length)];
 		
-			Random random = new Random();
-	        Block block = blocks.get(random.nextInt(blocks.size()));
-	        byte randomColor = allowed[random.nextInt(allowed.length)];
-	        block.setData(randomColor);
+		//Prepare random colors...
+		byte[] colors = new byte[blocks.size()];
+		for (int n=0; n<colors.length; n++) {
+			colors[n] = allowed[random.nextInt(allowed.length)];
+		}
+		
+		//Set the blocks
+		for (int n=0; n<colors.length; n++) {
+			blocks.get(n).setData(colors[n]);
+		}
 	}
 }
 
