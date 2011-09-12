@@ -22,6 +22,7 @@ public class discoMain extends JavaPlugin {
 	public static ArrayList<Player> using = new ArrayList<Player>();
 	//public static Map<String, Block> blocks = new HashMap<String, Block>();
 	public static ArrayList<Block> blocks = new ArrayList<Block>();
+	private static byte[] allowed = {1,2,3,4,5,6,9,10,11,14};
 
 
 	//@Override
@@ -40,24 +41,12 @@ public class discoMain extends JavaPlugin {
 		reader.readAll();
 		Log.info("Disco plugin enabled!");
 	}
-
 	public static void blockChanger() {
-			//Random random2 = new Random();
-		//	Block block = blocks.get(random2.nextInt(blocks.size()));
-		//	Random random = new Random();
-		//	byte randomColor = (byte) random.nextInt(10000);
-			//if (randomColor == ){
-		///	block.setData(randomColor);
-			//}
-			
-			 Random random2 = new Random();
-             Block block = blocks.get(random2.nextInt(blocks.size()));
-             Random random = new Random();
-             byte randomColor = (byte) random.nextInt(16);
-             if(randomColor == 0 || randomColor == 7 || randomColor == 8 || randomColor == 12 || randomColor == 15|| randomColor == 13){
-                 blockChanger();
-                 return;
-                 }else
-             block.setData(randomColor);
+		
+			Random random = new Random();
+	        Block block = blocks.get(random.nextInt(blocks.size()));
+	        byte randomColor = allowed[random.nextInt(allowed.length)];
+	        block.setData(randomColor);
 	}
 }
+
