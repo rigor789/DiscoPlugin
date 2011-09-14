@@ -28,7 +28,7 @@ public class discoMain extends JavaPlugin {
 
 	//@Override
 	public void onDisable() {
-		Log.info("Disco plugin disabled!");
+		Log.info("[DiscoPlugin] Disco plugin disabled!");
 	}
 	//@Override
 	public void onEnable() {
@@ -41,7 +41,7 @@ public class discoMain extends JavaPlugin {
 		coordinateReader reader = new coordinateReader(this);
 		reader.readAll();
 		random = new Random();
-		Log.info("Disco plugin enabled!");
+		Log.info("[DiscoPlugin] Disco plugin enabled!");
 	}
 	public static void blockChanger() {
         //Block block = blocks.get(random.nextInt(blocks.size()));
