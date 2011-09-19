@@ -2,8 +2,10 @@ package me.rigi.disco;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockListener;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -17,13 +19,21 @@ public class DiscoBlockListener extends BlockListener {
 	public DiscoBlockListener(DiscoMain plugin) {
 		this.plugin = plugin;
 	}
-
+	private HashMap<Player, String> using = DiscoMain.using;
+	private HashMap<String, ArrayList<Block>> discos = DiscoMain.discos;
+	
 	public void onBlockPlace(BlockPlaceEvent event) {;
-	if(DiscoMain.blocks.containsKey("Test")){
-		DiscoMain.blocks.get("Test").add(event.getBlock());
-	}else{
-		DiscoMain.blocks.put("Test", new ArrayList<Block>());
-		DiscoMain.blocks.get("Test").add(event.getBlock());
+	Player player = event.getPlayer();
+	Block block = event.getBlock();
+	if(using.containsKey(player)){
+		if(discos.containsKey(using.get(player))){
+			discos.get(using.get(player)).add(block);
+			player.sendMessage("Block added to the disco!");
+		}else{
+			discos.put(using.get(player), new ArrayList<Block>());
+			discos.get(using.get(player)).add(block);
+			player.sendMessage("Block added to the disco!");
+		}	
 	}
 	
 	
@@ -31,6 +41,15 @@ public class DiscoBlockListener extends BlockListener {
 	
 	
 	public void onBlockBreak(BlockBreakEvent event){
-	
+		Player player = event.getPlayer();
+		Block block = event.getBlock();
+		if(using.containsKey(player)){
+			if(discos.containsKey(using.get(player))){
+				if(discos.get(using.get(player)).contains(block)){
+				discos.get(using.get(player)).remove(block);
+				player.sendMessage("Block removed from the disco!");
+				}
+			}
 	}
+}
 }

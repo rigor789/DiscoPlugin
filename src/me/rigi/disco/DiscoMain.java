@@ -15,8 +15,8 @@ import org.bukkit.entity.Player;
 public class DiscoMain extends JavaPlugin {
 	private DiscoBlockListener bListener = new DiscoBlockListener(this);
 	Logger Log = Logger.getLogger("Minecraft");
-	public static ArrayList<Player> using = new ArrayList<Player>();
-	public static HashMap<String, ArrayList<Block>> blocks = new HashMap<String, ArrayList<Block>>();
+	public static HashMap<Player, String> using = new HashMap<Player, String>();
+	public static HashMap<String, ArrayList<Block>> discos = new HashMap<String, ArrayList<Block>>();
 
 	//@Override
 	public void onDisable() {
@@ -28,7 +28,8 @@ public class DiscoMain extends JavaPlugin {
 		pm.registerEvent(Type.BLOCK_PLACE, bListener, Priority.Normal, this);
 		pm.registerEvent(Type.BLOCK_BREAK, bListener, Priority.Normal, this);
 		getCommand("disco").setExecutor(new DiscoCmdExecutor(this));
-	
+		DiscoReaderWriter.createDir();
+		DiscoReaderWriter.ReadAll();
 		Log.info("Disco plugin enabled!");
 	}
 

@@ -14,22 +14,22 @@ import org.bukkit.block.Block;
 
 public class DiscoReaderWriter {
 	static String mainDirectory = "plugins/DiscoPlugin";
-	static File blocks = new File(mainDirectory + File.separator + "blocks.dat");
+	static File discosfile = new File(mainDirectory + File.separator + "discos.dat");
 	
-	public void createDir() {
+	public static void createDir() {
 		new File(mainDirectory).mkdir();	
-			if (!blocks.exists()) {				
+			if (!discosfile.exists()) {				
 			try {
-				blocks.createNewFile();					
+				discosfile.createNewFile();					
 				} catch (IOException ex) {
 				ex.printStackTrace();
 			}
 			}
 		}
 	
-	public void ReadAll() {
+	public static void ReadAll() {
 		 try{
-			 FileReader fstream = new FileReader(blocks);			
+			 FileReader fstream = new FileReader(discosfile);			
 				BufferedReader in = new BufferedReader(fstream);
 				String input=in.readLine();
 				String[] items = input.split(";");
@@ -40,13 +40,11 @@ public class DiscoReaderWriter {
 					 int z = Integer.parseInt(item[4]);
 				World world = Bukkit.getServer().getWorld(item[1]);
 				Block blockAt = world.getBlockAt(x,y,z);
-				if(DiscoMain.blocks.containsKey(item[0])){
-					DiscoMain.blocks.get(item[0]).add(blockAt);
-					System.out.println("Allready existing disconame: "+item[0]+" and block added: "+ blockAt);
+				if(DiscoMain.discos.containsKey(item[0])){
+					DiscoMain.discos.get(item[0]).add(blockAt);
 				}else{
-				DiscoMain.blocks.put(item[0],new ArrayList<Block>());
-				DiscoMain.blocks.get(item[0]).add(blockAt);
-				System.out.println("Disconame: "+item[0]+" and block added: "+ blockAt);
+				DiscoMain.discos.put(item[0],new ArrayList<Block>());
+				DiscoMain.discos.get(item[0]).add(blockAt);
 				 }
 				 }
 			 }catch (Exception e){//Catch exception if any
@@ -57,11 +55,11 @@ public class DiscoReaderWriter {
 	
 public static void WriteAll() {
 		
-		Set<String> discos = DiscoMain.blocks.keySet();
+		Set<String> discos = DiscoMain.discos.keySet();
 		ArrayList<String> towrite =new ArrayList<String>();
 		
 for(String disco : discos){
-	ArrayList<Block> blocks = DiscoMain.blocks.get(disco);
+	ArrayList<Block> blocks = DiscoMain.discos.get(disco);
 		
 	for(Block block : blocks){
 		String world = block.getWorld().getName();
@@ -74,7 +72,7 @@ for(String disco : discos){
 			
 		boolean append = false;
 		try{
-			  FileWriter fstream = new FileWriter(blocks, append);
+			  FileWriter fstream = new FileWriter(discosfile, append);
 			  PrintWriter out = new PrintWriter(fstream, true); 
 			  for(String coordinate : towrite){
 				  out.write(coordinate);		 
