@@ -1,7 +1,7 @@
 name: Disco
 version: 0.1
-main: me.rigi.disco.discoMain
+main: me.rigi.disco.DiscoMain
 commands:
   disco:
-    description: Used to make a disco!
+    description: DiscoPlugin commandbase!
     usage: /disco
