@@ -4,21 +4,23 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 public class DiscoCmdExecutor implements CommandExecutor {
 	@SuppressWarnings("unused")
 	private DiscoMain plugin;
 	public DiscoCmdExecutor(DiscoMain plugin) {
 		this.plugin = plugin;
-	}
-	
+	}	
 	private HashMap<Player, String> using = DiscoMain.using;
 	private HashMap<String, ArrayList<Block>> discos = DiscoMain.discos;
+	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String CommandLabel,
 			String[] args) {
@@ -80,14 +82,24 @@ public class DiscoCmdExecutor implements CommandExecutor {
 			}else if(args[0].equalsIgnoreCase("remove")){ //REMOVE
 				if(sender.isOp()||sender.hasPermission("discoplugin.remove")){
 					if(args.length >= 2){
+						if(!(using.containsKey(sender))){
 						if(discos.containsKey(args[1])){
+						ArrayList<Block> remove = discos.get(args[1]);
+						for(Block block : remove){
+							block.setType(Material.AIR);
+						}
+						player.getInventory().addItem(new ItemStack(Material.WOOL, discos.get(args[1]).size()));
+						
 						discos.remove(args[1]);
 						DiscoReaderWriter.WriteAll();
 						DiscoReaderWriter.ReadAll();
 						sender.sendMessage("Disco removed!");
 						}else{
 						sender.sendMessage("That disco dosent exists");
-						}		
+						}	
+						}else{
+							sender.sendMessage("You are editing a disco! Type /disco finish and try again!");
+						}
 					}
 				}else{
 					sender.sendMessage("You dont have acces to that command");

@@ -4,6 +4,7 @@ package me.rigi.disco;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -25,6 +26,7 @@ public class DiscoBlockListener extends BlockListener {
 	public void onBlockPlace(BlockPlaceEvent event) {;
 	Player player = event.getPlayer();
 	Block block = event.getBlock();
+	if(block.getType()== Material.WOOL){
 	if(using.containsKey(player)){
 		if(discos.containsKey(using.get(player))){
 			discos.get(using.get(player)).add(block);
@@ -35,6 +37,7 @@ public class DiscoBlockListener extends BlockListener {
 			player.sendMessage("Block added to the disco!");
 		}	
 	}
+	}
 	
 	
 	}
@@ -43,13 +46,16 @@ public class DiscoBlockListener extends BlockListener {
 	public void onBlockBreak(BlockBreakEvent event){
 		Player player = event.getPlayer();
 		Block block = event.getBlock();
+		if(block.getType()== Material.WOOL){
 		if(using.containsKey(player)){
 			if(discos.containsKey(using.get(player))){
 				if(discos.get(using.get(player)).contains(block)){
 				discos.get(using.get(player)).remove(block);
+				block.setType(Material.WOOL);
 				player.sendMessage("Block removed from the disco!");
 				}
 			}
 	}
+		}
 }
 }
