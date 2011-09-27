@@ -56,7 +56,7 @@ public class DiscoReaderWriter {
 				 }
 				 }}
 			 }catch (Exception e){//Catch exception if any
-				  System.err.println("[StreetLightZ] Error: " + e.getMessage());
+				  System.err.println("[DiscoPlugin] Error: " + e.getMessage());
 				  }
 		
 	}
@@ -88,7 +88,7 @@ for(String disco : discos){
 						  
 			  out.close(); //Close the output stream
 			  }catch (Exception e){//Catch exception if any
-			  System.err.println("[StreetLightZ] Error: " + e.getMessage());
+			  System.err.println("[DiscoPlugin] Error: " + e.getMessage());
 			  }
 }
 }
