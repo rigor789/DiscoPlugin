@@ -33,6 +33,7 @@ public class DiscoReaderWriter {
 				BufferedReader in = new BufferedReader(fstream);
 				String input=in.readLine();
 				String[] items = input.split(";");
+				if(input != null){				
 				 for(String block : items){
 					 String[] item = block.split(",");
 					 int x = Integer.parseInt(item[2]);
@@ -40,15 +41,22 @@ public class DiscoReaderWriter {
 					 int z = Integer.parseInt(item[4]);
 				World world = Bukkit.getServer().getWorld(item[1]);
 				Block blockAt = world.getBlockAt(x,y,z);
+				
 				if(DiscoMain.discos.containsKey(item[0])){
+					if(!(DiscoMain.discos.get(item[0]).contains(blockAt))){
 					DiscoMain.discos.get(item[0]).add(blockAt);
+					/**System.out.println("Block added! Array size: "+DiscoMain.discos.get(item[0]).size());*/
+					}
 				}else{
 				DiscoMain.discos.put(item[0],new ArrayList<Block>());
-				DiscoMain.discos.get(item[0]).add(blockAt);
+				if(!(DiscoMain.discos.get(item[0]).contains(blockAt))){
+					DiscoMain.discos.get(item[0]).add(blockAt);
+					/**System.out.println("Block added! Array size: "+DiscoMain.discos.get(item[0]).size());*/
+					}
 				 }
-				 }
+				 }}
 			 }catch (Exception e){//Catch exception if any
-				  System.err.println("Error: " + e.getMessage());
+				  System.err.println("[StreetLightZ] Error: " + e.getMessage());
 				  }
 		
 	}
@@ -80,7 +88,7 @@ for(String disco : discos){
 						  
 			  out.close(); //Close the output stream
 			  }catch (Exception e){//Catch exception if any
-			  System.err.println("Error: " + e.getMessage());
+			  System.err.println("[StreetLightZ] Error: " + e.getMessage());
 			  }
 }
 }

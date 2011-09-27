@@ -29,12 +29,20 @@ public class DiscoBlockListener extends BlockListener {
 	if(block.getType()== Material.WOOL){
 	if(using.containsKey(player)){
 		if(discos.containsKey(using.get(player))){
+			if(discos.get(using.get(player)).contains(block)){
+			}else{
 			discos.get(using.get(player)).add(block);
+			System.out.println("Array have: " + discos.get(using.get(player)).size()+" blocks after adding");
 			player.sendMessage("Block added to the disco!");
+			}
 		}else{
 			discos.put(using.get(player), new ArrayList<Block>());
+			if(discos.get(using.get(player)).contains(block)){
+			}else{
 			discos.get(using.get(player)).add(block);
+			System.out.println("Array have: " + discos.get(using.get(player)).size()+" blocks after adding");
 			player.sendMessage("Block added to the disco!");
+			}
 		}	
 	}
 	}

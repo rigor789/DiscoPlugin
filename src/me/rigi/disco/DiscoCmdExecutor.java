@@ -84,11 +84,12 @@ public class DiscoCmdExecutor implements CommandExecutor {
 					if(args.length >= 2){
 						if(!(using.containsKey(sender))){
 						if(discos.containsKey(args[1])){
-						ArrayList<Block> remove = discos.get(args[1]);
-						for(Block block : remove){
+						for(Block block : discos.get(args[1])){
 							block.setType(Material.AIR);
+							
 						}
 						player.getInventory().addItem(new ItemStack(Material.WOOL, discos.get(args[1]).size()));
+						System.out.println("Integer of blocks in: "+discos.get(args[1])+" omfg: "+discos.get(args[1]).size());
 						
 						discos.remove(args[1]);
 						DiscoReaderWriter.WriteAll();

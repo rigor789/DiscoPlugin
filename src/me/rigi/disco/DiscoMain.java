@@ -3,7 +3,6 @@ package me.rigi.disco;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Logger;
-
 import org.bukkit.block.Block;
 import org.bukkit.event.Event.Type;
 import org.bukkit.event.Event.Priority;
@@ -34,6 +33,6 @@ public class DiscoMain extends JavaPlugin {
 	}
 
 	public static void blockChanger() {
-		
+
 	}
 }
